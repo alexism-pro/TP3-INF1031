@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.tp3.Models.Alarm;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -17,6 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.tp3.databinding.ActivityMainBinding;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +50,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         binding.fab.setOnClickListener(this);
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if(!task.isSuccessful()){
+                            Log.d("FIREBASE", "Firebase token fetch failed");
+                            return;
+                        }
+
+                        Log.d("FIREBASE", task.getResult());
+                    }
+                });
     }
 
     @Override

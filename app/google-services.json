@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "53006643202",
+    "project_id": "tp3-android-af068",
+    "storage_bucket": "tp3-android-af068.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53006643202:android:ec4c714e53b185589cb71b",
+        "android_client_info": {
+          "package_name": "com.example.tp3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53006643202-mmfrr3nmkdr1asqn5uhcv82n69p9fp83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVBt-RJ485Dob3dBevix9ZNGY67-x35Ws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53006643202-mmfrr3nmkdr1asqn5uhcv82n69p9fp83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
