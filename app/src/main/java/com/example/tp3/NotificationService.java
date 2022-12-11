@@ -5,7 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -13,7 +14,8 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.security.acl.NotOwnerException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class NotificationService extends FirebaseMessagingService {
 
@@ -25,11 +27,11 @@ public class NotificationService extends FirebaseMessagingService {
             String title = message.getNotification().getTitle();
             String body = message.getNotification().getBody();
 
-            showNotification(title, body);
+            showNotification(message, title, body);
         }
     }
 
-    private void showNotification(String title, String body) {
+    private void showNotification(RemoteMessage message, String title, String body) {
         // FCM Notification Channel setup
         String CHANNEL_ID = "FCM_CHANNEL2";
         NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -46,9 +48,26 @@ public class NotificationService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSmallIcon(R.drawable.ic_baseline_add_24)
                 .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_baseline_add_24);;
+
+        if(message.getNotification().getImageUrl() !=  null) {
+            String imageUrl = message.getNotification().getImageUrl().toString();
+
+            try {
+                URL url = new URL(imageUrl);
+                Bitmap decodedImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                builder.setLargeIcon(decodedImage);
+                builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(decodedImage));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
 
         notifManager.notify(1, builder.build());
     }

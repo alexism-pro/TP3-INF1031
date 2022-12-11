@@ -28,6 +28,8 @@
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.TP3.NoActionBar" />
+        
+        <receiver android:name=".TimerBroadcast"/>
 
         <service android:name="com.example.tp3.NotificationService" android:exported="false">
             <intent-filter>

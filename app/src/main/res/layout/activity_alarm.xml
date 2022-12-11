@@ -30,6 +30,7 @@
         android:textSize="16dp" />
 
     <TimePicker
+        android:id="@+id/alarmTimePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textview_time"
