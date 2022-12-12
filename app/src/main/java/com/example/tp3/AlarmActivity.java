@@ -26,7 +26,7 @@ public class AlarmActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
-        findViewById(R.id.button_cancel).setOnClickListener((View v) -> {finish();});
+        findViewById(R.id.button_cancel).setOnClickListener((View v) -> finish());
         findViewById(R.id.button_confirm).setOnClickListener(this::confirmAlarm);
         timePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
         alarmNameView = (EditText) findViewById(R.id.edittext_second);
@@ -51,7 +51,14 @@ public class AlarmActivity extends AppCompatActivity{
 
         // Invalid time
         if(timerTime < currentTime) {
-            Toast errorToast = Toast.makeText(this, getString(R.string.tempsInvalide), Toast.LENGTH_SHORT);
+            Toast errorToast = Toast.makeText(this, getString(R.string.tempsInvalide), Toast.LENGTH_LONG);
+            errorToast.show();
+            return;
+        }
+
+        // No name
+        if(alarmNameView.getText().toString().trim().length() < 1) {
+            Toast errorToast = Toast.makeText(this, "Veuillez entrer un nom pour l'alarme.", Toast.LENGTH_LONG);
             errorToast.show();
             return;
         }
@@ -66,6 +73,7 @@ public class AlarmActivity extends AppCompatActivity{
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, timerTime, pIntent);
+        finish();
     }
 
     private void createNotificationChannel() {
